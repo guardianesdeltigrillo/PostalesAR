@@ -15,12 +15,15 @@
   --panel-bg: rgba(5, 16, 8, 0.6); /* Transparencia para el efecto cristal */
   --border-glow: rgba(74, 222, 128, 0.25);
 
-  /* Nuevas variables: Estilo Visor de Cámara */
+  /* Variables: Estilo Visor de Cámara */
   --cam-panel: rgba(10, 10, 10, 0.85); /* Fondo casi negro */
   --cam-border: rgba(255, 255, 255, 0.4); /* Líneas de enfoque blancas/grises */
   --cam-text: #FFFFFF; /* Texto blanco de alto contraste */
   --cam-muted: #888888; /* Texto secundario gris */
   --cam-rec: #FF2244; /* Rojo de grabación */
+  
+  /* Variable para el botón de descarga */
+  --cyan-blue: #00BFFF;
 }
 
 body {
@@ -54,7 +57,6 @@ body {
   position: absolute;
   inset: 0;
   background-color: var(--dark-bg);
-  /* Luces de bosque (komorebi) superpuestas + Textura de ruido */
   background-image: 
     radial-gradient(circle at 15% 30%, rgba(74, 222, 128, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 85% 70%, rgba(250, 204, 21, 0.08) 0%, transparent 50%),
@@ -65,7 +67,6 @@ body {
 .grid-lines {
   position: absolute;
   inset: 0;
-  /* Una cuadrícula muy sutil para mantener un leve toque tecnológico */
   background-image:
     linear-gradient(rgba(74, 222, 128, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(74, 222, 128, 0.02) 1px, transparent 1px);
@@ -80,6 +81,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  width: 90%;
 }
 
 .splash-icon {
@@ -156,31 +158,49 @@ body {
   letter-spacing: 0.15em;
   padding: 0.4rem 1.2rem;
   border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 20px; /* Bordes suaves */
+  border-radius: 20px;
   background: rgba(16, 185, 129, 0.05);
 }
 
+/* ESTRUCTURA DE BOTONES RESPONSIVA */
 .splash-btn-group {
   display: flex;
+  flex-direction: column; /* Apilados en móviles */
   gap: 1rem;
   margin-top: 0.5rem;
+  width: 100%;
+  max-width: 280px; /* Evita que crezcan demasiado a lo ancho */
 }
 
-/* Botones con efecto Glassmorphism */
+@media (min-width: 600px) {
+  .splash-btn-group {
+    flex-direction: row; /* Lado a lado en PC/Tablets */
+    max-width: none;
+    justify-content: center;
+  }
+}
+
 .btn-ar {
+  width: 100%; /* Toma todo el ancho de su contenedor para que sean idénticos */
   font-family: 'Exo 2', sans-serif;
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0.85rem 2.2rem;
-  border-radius: 30px; /* Orgánico */
-  backdrop-filter: blur(8px); /* Efecto cristal */
+  border-radius: 30px; 
+  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+}
+
+@media (min-width: 600px) {
+  .btn-ar {
+    width: auto; /* Ancho automático en PC/Tablets */
+  }
 }
 
 .btn-start {
@@ -197,6 +217,25 @@ body {
 }
 
 .btn-start:active { transform: scale(0.97); }
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: rgba(0, 191, 255, 0.15);
+  color: var(--cyan-blue);
+  border: 1px solid rgba(0, 191, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 191, 255, 0.2);
+}
+
+.btn-download:hover {
+  background: rgba(0, 191, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 191, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-download:active { transform: scale(0.97); }
 
 .btn-stop {
   background: rgba(5, 16, 8, 0.4);
@@ -228,20 +267,18 @@ body {
 
 #hud.active { display: block; }
 
-/* Esquinas de enfoque */
 .hud-corner {
   position: absolute;
   width: 24px;
   height: 24px;
   opacity: 0.6;
-  border-radius: 4px; /* Suavizamos las esquinas del visor */
+  border-radius: 4px;
 }
 .hud-corner.tl { top: 20px; left: 20px; border-top: 3px solid var(--leaf-bright); border-left: 3px solid var(--leaf-bright); }
 .hud-corner.tr { top: 20px; right: 20px; border-top: 3px solid var(--leaf-bright); border-right: 3px solid var(--leaf-bright); }
 .hud-corner.bl { bottom: 20px; left: 20px; border-bottom: 3px solid var(--leaf-bright); border-left: 3px solid var(--leaf-bright); }
 .hud-corner.br { bottom: 20px; right: 20px; border-bottom: 3px solid var(--leaf-bright); border-right: 3px solid var(--leaf-bright); }
 
-/* Barra superior */
 .hud-topbar {
   position: absolute;
   top: 20px;
@@ -260,11 +297,11 @@ body {
   backdrop-filter: blur(4px);
 }
 
-/* Botón Stop en el HUD */
+/* Botón Detener HUD desplazado hacia abajo */
 .hud-stop-btn {
   position: absolute;
-  top: 20px;
-  right: 60px;
+  top: 70px;
+  right: 20px;
   pointer-events: all;
   font-family: 'Exo 2', sans-serif;
   font-weight: 600;
@@ -285,7 +322,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Tarjeta de Información (Efecto Visor de Cámara) */
 #target-card {
   position: absolute;
   bottom: 40px;
@@ -295,7 +331,7 @@ body {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid var(--cam-border);
-  border-radius: 2px; /* Geometría recta y técnica */
+  border-radius: 2px;
   padding: 1.2rem 1.4rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
   transition: opacity 0.4s ease, transform 0.4s ease;
@@ -317,7 +353,6 @@ body {
   padding-bottom: 0.7rem;
 }
 
-/* Punto rojo de grabación (REC) */
 .card-status-dot {
   width: 10px;
   height: 10px;
@@ -378,7 +413,6 @@ body {
   color: var(--cam-text);
 }
 
-/* Quitamos el verde brillante y dejamos todo neutral */
 .field-value.accent { color: var(--cam-text); }
 
 .color-swatch {
@@ -396,7 +430,6 @@ body {
   border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Mensaje cuando no hay target */
 .hud-hint {
   position: absolute;
   bottom: 40px;
@@ -417,3 +450,107 @@ body {
 }
 
 .hud-hint.hidden { opacity: 0; }
+
+/* --- BOTÓN PARA ABRIR MANUAL --- */
+.btn-manual {
+  margin-top: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--cam-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.btn-manual:hover {
+  color: var(--leaf-bright);
+}
+
+/* --- MODAL DE INSTRUCCIONES --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 16, 8, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-window {
+  background: var(--cam-panel);
+  border: 1px solid var(--cam-border);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-title {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--cyan-blue);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--cam-muted);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.modal-close:hover { color: var(--cam-rec); }
+
+.modal-content {
+  padding: 1.5rem;
+  color: #E2E8F0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.modal-intro { margin-bottom: 1.5rem; }
+
+.step-block {
+  margin-bottom: 1.2rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--leaf-bright);
+}
+
+.step-block .step-title {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--sun-gold);
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.1em;
+}
+
+.modal-actions {
+  margin-top: 2rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}

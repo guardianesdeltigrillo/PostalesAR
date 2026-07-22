@@ -47,7 +47,57 @@
         <div class="splash-status" id="splash-status">● SISTEMA LISTO</div>
 
         <div class="splash-btn-group">
+          <!-- Botón Iniciar -->
           <button class="btn-ar btn-start" id="startButton">▶ &nbsp;Iniciar AR</button>
+          
+          <!-- Botón Descargar Targets -->
+          <a href="target/Targets_Jubi.pdf" download="Targets_Postales_Jubi.pdf" class="btn-ar btn-download">
+            ⬇ &nbsp;Descargar Targets
+          </a>
+        </div>
+
+        <!-- Botón para abrir el Manual Modal -->
+        <button class="btn-manual" id="openManualBtn">[ ? ] Manual de Operación</button>
+      </div>
+    </div>
+
+
+   <!-- ══ MODAL DE INSTRUCCIONES ══ -->
+    <div id="manualModal" class="modal-overlay hidden">
+      <div class="modal-window">
+        <div class="modal-header">
+          <div class="modal-title">MANUAL DE OPERACIÓN: ESCÁNER AR DE JUBI</div>
+          <button class="modal-close" id="closeManualBtn">X</button>
+        </div>
+        <div class="modal-content">
+          <p class="modal-intro">Bienvenido al sistema de rastreo y visualización en Realidad Aumentada. Esta interfaz te permitirá utilizar tu celular para proyectar información vital sobre <strong>Jubi</strong> y descubrir datos clave sobre la conservación del <strong>Tigrillo Lanudo</strong> (<em>Leopardus tigrinus</em>).</p>
+          
+          <div class="step-block">
+            <div class="step-title">[ PASO 1 ] PREPARACIÓN</div>
+            <p>Asegúrate de tener en tus manos una de las <strong>Postales de Jubi</strong> impresas o abiertas en otra pantalla.</p>
+          </div>
+          
+          <div class="step-block">
+            <div class="step-title">[ PASO 2 ] INICIALIZACIÓN</div>
+            <p>Presiona "Iniciar AR" y permite a tu navegador el acceso a la cámara de tu celular.</p>
+          </div>
+          
+          <div class="step-block">
+            <div class="step-title">[ PASO 3 ] ESCANEO</div>
+            <p>Enfoca la cámara hacia la ilustración de la postal manteniendo tu celular estable en un entorno iluminado.</p>
+          </div>
+          
+          <div class="step-block">
+            <div class="step-title">[ PASO 4 ] INTERACCIÓN</div>
+            <p>Al detectar el target, tu pantalla proyectará a Jubi y los paneles de información biológica y conservación sobre la postal.</p>
+          </div>
+
+          <div class="modal-actions">
+             <!-- Botón para descargar el PDF actualizado del Manual -->
+             <a href="target/Instructivo_Escaner_AR_Jubi.pdf" download="Instructivo_Escaner_AR_Jubi.pdf" class="btn-ar btn-download" style="font-size: 0.8rem; padding: 0.6rem 1.2rem;">
+               ⬇ Descargar PDF Instrucciones
+             </a>
+          </div>
         </div>
       </div>
     </div>
@@ -56,23 +106,21 @@
     <!-- ══ AR CONTAINER ══ -->
     <div id="container"></div>
 
-
     <!-- ══ HUD ══ -->
     <div id="hud">
       <div class="scan-overlay"></div>
-
       <div class="hud-corner tl"></div>
       <div class="hud-corner tr"></div>
       <div class="hud-corner bl"></div>
       <div class="hud-corner br"></div>
-
       <div class="hud-topbar">POSTAL AR &nbsp;·&nbsp; TRACKING ACTIVO</div>
-
+      
+      <!-- Botón Detener -->
       <button class="hud-stop-btn" id="hudStopButton">■ Detener</button>
-
+      
       <div class="hud-hint" id="hudHint">APUNTA LA CÁMARA A UN TARGET</div>
-
-      <!-- Info card (se llena desde JS) -->
+      
+      <!-- Info card -->
       <div id="target-card">
         <div class="card-header">
           <div class="card-status-dot"></div>
@@ -105,5 +153,19 @@
       </div>
     </div>
 
+    <!-- Script SOLO para el Modal (El botón detener lo maneja main.js) -->
+    <script>
+      const modal = document.getElementById('manualModal');
+      const openBtn = document.getElementById('openManualBtn');
+      const closeBtn = document.getElementById('closeManualBtn');
+
+      openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+    </script>
   </body>
 </html>

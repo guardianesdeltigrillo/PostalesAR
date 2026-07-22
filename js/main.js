@@ -46,7 +46,7 @@ const CONFIG = [
     colorHex: '#FF2244',
     colorName: 'Rojo',
     extra: 'Jubi es alguien muy solitario al ser asi la naturaleza del animal, algo sorprendente es que se ha adapato a vivir en sitios mas urbanos como la sabana de Bogotá',
-  },
+  }
 ];
 
 // ══════════════════════════════════════════════
@@ -55,7 +55,7 @@ const CONFIG = [
 const splashEl   = document.getElementById('splash');
 const hudEl      = document.getElementById('hud');
 const startBtn   = document.getElementById('startButton');
-const stopBtn    = document.getElementById('stopButton');
+// ELIMINADO: const stopBtn = document.getElementById('stopButton');
 const hudStopBtn = document.getElementById('hudStopButton');
 
 const hudCard    = document.getElementById('target-card');
@@ -109,13 +109,10 @@ CONFIG.forEach((cfg, index) => {
   // Modelo GLB
   const loader = new GLTFLoader();
   
-loader.load('./assets/3d/JubiTigrillo2.glb', (gltf) => {
+  loader.load('./assets/3d/JubiTigrillo2.glb', (gltf) => {
     const model = gltf.scene;
     
-
     model.scale.set(2, 2, 2);
-    
-
     model.position.set(0, 0, 0); 
     
     anchor.group.add(model);
@@ -178,5 +175,5 @@ const stopAR = () => {
 };
 
 startBtn.addEventListener('click', startAR);
-stopBtn.addEventListener('click', stopAR);
+// ELIMINADO: stopBtn.addEventListener('click', stopAR); 
 hudStopBtn.addEventListener('click', stopAR);
